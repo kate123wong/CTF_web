@@ -16,4 +16,4 @@ def users():
 
 @app.route('/')
 def hello():
-    return render_template('admin/index.html')
+    return render_template('login.html')
