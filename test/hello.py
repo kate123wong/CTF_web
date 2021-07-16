@@ -8,6 +8,9 @@ def hello():
 def register():
     username = request.form.get('username')
     passwd = request.form.get('passwd')
+    
+    print(username, passwd)
+
     return render_template('register.html')
     
 if __name__ == "__main__":

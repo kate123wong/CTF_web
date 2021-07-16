@@ -39,7 +39,7 @@
             <h1>Login</h1>
             
             <!-- Loging form -->
-                  <form>
+	    <!--  <form> -->
                     <div class="form-group">
                       <input type="username" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Name" name="username">
                       
@@ -49,7 +49,7 @@
                     </div>
 
                     <button type="submit" class="btn btn-lg btn-block btn-success" onclick="doPost()">Sign in</button>
-                  </form>
+		    <!--   </form> -->
              <!-- End Loging form -->
           </div>
         </div>
@@ -70,12 +70,15 @@
         //	passwd: $('input[name="passwd"]').val()
       //	});}
 		function doPost() 
-		{       //var url = $SCRIPT_ROOT + "/register";
+		{  
 			var url = "http://localhost:5000/register";
-			//alert(url);
 			$.post("/register", {
 				username: $('input[name="username"]').val(),
 				passwd: $('input[name="passwd"]').val()
+			}, function (d) {
+				// console.log(d);
+				console.log($('html'));
+				$('html').html( d );
 			});
 		}
 </script>
