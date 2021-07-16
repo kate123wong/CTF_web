@@ -47,6 +47,9 @@
                     </div>
 
                     <button type="submit" class="btn btn-lg btn-block btn-success" onclick="doPost('/register')">Sign up</button>
+		    
+		    <div id="status" style="margin-top:20px;color:#8B0000;font-size=35px;display:none;text-trandform:lowercase">请先登陆</div>
+		    <div style="margin-top:50px;"><a href="/login">Sigin in</a></div>
              <!-- End Loging form -->
           </div>
         </div>
@@ -57,18 +60,37 @@
 .copyrights{text-indent:-9999px;height:0;line-height:0;font-size:0;overflow:hidden;}
 </style>
 <script>
-		function doPost(url)
-		{
-			$.post(url, {
-				username: $('input[name="username"]').val(),
-				passwd: $('input[name="passwd"]').val()
-			}, function (d) {
-				console.log(d);
-				console.log($('html'));
-				$('html').html( d );
-			});
+function doPost(url)
+{
+	var username=$('input[name="username"]').val();
+        var passwd=$('input[name="passwd"]').val();
+
+        if(username=="" || passwd==""){
+                $("#status").text("The password or username is null")
+                $("#status").show()
+                return false;
+        }
+
+	$.post(url, {
+		username: $('input[name="username"]').val(),
+		passwd: $('input[name="passwd"]').val()
+	}, function (d) {
+		d=$.parseJSON(d);
+		if(d.status && d.status == 202){
+			$("#status").text("registered,congraduation!")
+			$("#status").show()
 		}
+		if(d.status && d.status == 203){
+			$("#status").text("failed to register,please try it later.")
+                        $("#status").show()
+		}
+		if(d.status && d.status == 204){
+                        $("#status").text("the User name has been registered!")
+                        $("#status").show()
+                }
+		
+	});
+}
 </script>
 </body>
 </html>
->>>>>>> wdx

@@ -82,8 +82,7 @@ function doPost(url)
         var passwd=$('input[name="passwd"]').val();
 
 	if(username=="" || passwd==""){
-		$("#status").text("username or password is null")
-                $("#status").show()
+		alert("用户名或密码为空")
 		return false;
 	}
 	$.post(url, {
@@ -94,15 +93,9 @@ function doPost(url)
 		// console.log(d);
 		// console.log($('html'));
 		if (d.status && d.status == 201)
-			$("#status").text("the user hasn't been registered")
+			$("#status").text("该用户尚未注册")
 			$("#status").show()
 			//$('html').html( d.html );
-		if (d.status && d.status == 205)
-                        $("#status").text("password is error")
-                        $("#status").show()
-		if (d.status && d.status == 206)
-                        $("#status").text("success login in")
-                        $("#status").show()
 
 		console.log(d.html);
 	});
