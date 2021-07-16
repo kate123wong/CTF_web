@@ -1,6 +1,8 @@
 ﻿<!doctype html>
 <html lang="en">
   <head>
+    <script type=text/javascript src="{{
+  	url_for('static', filename='jquery-3.6.0.js') }}"></script>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -54,11 +56,8 @@
         </div>
     </div>
 <script type=text/javascript>
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-	<script>window.jQuery || document.write('<script src="{{
-  	url_for('static', filename='jquery.js') }}">\x3C/script>')</script>
- 	 $SCRIPT_ROOT = {{ request.script_root|tojson }};
-	echo $SCRIPT_ROOT ;
+// 	 $SCRIPT_ROOT = {{ request.script_root|tojson }};
+//	echo $SCRIPT_ROOT ;
 </script>
 
   <style>
@@ -71,9 +70,10 @@
         //	passwd: $('input[name="passwd"]').val()
       //	});}
 		function doPost() 
-		{       //url = $SCRIPT_ROOT + url;
-			var url = "/register";
-			$.post(url, {
+		{       //var url = $SCRIPT_ROOT + "/register";
+			var url = "http://localhost:5000/register";
+			//alert(url);
+			$.post("/register", {
 				username: $('input[name="username"]').val(),
 				passwd: $('input[name="passwd"]').val()
 			});
