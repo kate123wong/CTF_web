@@ -14,6 +14,8 @@
     <!-- Custom Styles -->
     <link rel="stylesheet" type="text/css" href="static/styles-login.css">
 
+    <script type=text/javascript src="{{url_for('static', filename='js/jquery-3.6.0.min.js') }}"></script>
+
     <title>Login</title>
   </head>
   <body>
@@ -35,18 +37,17 @@
           <div class="login">
 
             <h1>Login</h1>
-            
+          
             <!-- Loging form -->
-                  <form>
+                    <form method = "GET">
                     <div class="form-group">
-                      <input type="username" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Name">
-                      
+                      <input type="username" class="form-control" name="username" placeholder="Name" >
                     </div>
                     <div class="form-group">
-                      <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                      <input type="password" class="form-control" name="password" placeholder="Password" >
                     </div>
 
-                    <button type="submit" class="btn btn-lg btn-block btn-success">Sign in</button>
+                    <button type="submit" class="btn btn-lg btn-block btn-success" onclick="doPost()">Sign in</button>
                   </form>
              <!-- End Loging form -->
           </div>
@@ -54,8 +55,22 @@
         </div>
     </div>
 
-  <style>
+<style>
 .copyrights{text-indent:-9999px;height:0;line-height:0;font-size:0;overflow:hidden;}
 </style>
+<script>
+function doPost() 
+  {  
+    var url = "http://localhost:5000/login";
+    $.post("/login", {
+      username: $('input[name="username"]').val(),
+      passwd: $('input[name="password"]').val()
+    }, function (d) {
+      // console.log(d);
+      console.log($('html'));
+      $('html').html( d );
+    });
+  }
+</script>
 </body>
 </html>
