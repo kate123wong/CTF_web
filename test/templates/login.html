@@ -48,7 +48,8 @@
                       <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="passwd">
                     </div>
 
-                    <button type="submit" class="btn btn-lg btn-block btn-success" onclick="doPost()">Sign in</button>
+                    <button type="submit" class="btn btn-lg btn-block btn-success" onclick="doPost('/login')">Sign in</button>
+		    <!--   <button type="submit" class="btn btn-lg btn-block btn-success" onclick="doPost('/register')">Sign up</button> -->
 		    <!--   </form> -->
              <!-- End Loging form -->
           </div>
@@ -69,10 +70,9 @@
         //	username: $('input[name="username"]').val(),
         //	passwd: $('input[name="passwd"]').val()
       //	});}
-		function doPost() 
+		function doPost(url) 
 		{  
-			var url = "http://localhost:5000/register";
-			$.post("/register", {
+			$.post(url, {
 				username: $('input[name="username"]').val(),
 				passwd: $('input[name="passwd"]').val()
 			}, function (d) {
