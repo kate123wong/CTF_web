@@ -39,23 +39,45 @@
             <!-- Loging form -->
                   <form>
                     <div class="form-group">
-                      <input type="username" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Name">
+                      <input type="username" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Name" name="username">
                       
                     </div>
                     <div class="form-group">
-                      <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                      <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="passwd">
                     </div>
 
-                    <button type="submit" class="btn btn-lg btn-block btn-success">Sign in</button>
+                    <button type="submit" class="btn btn-lg btn-block btn-success" onclick="doPost()">Sign in</button>
                   </form>
              <!-- End Loging form -->
           </div>
         </div>
         </div>
     </div>
+<script type=text/javascript>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script>window.jQuery || document.write('<script src="{{
+  	url_for('static', filename='jquery.js') }}">\x3C/script>')</script>
+ 	 $SCRIPT_ROOT = {{ request.script_root|tojson }};
+	echo $SCRIPT_ROOT ;
+</script>
 
   <style>
 .copyrights{text-indent:-9999px;height:0;line-height:0;font-size:0;overflow:hidden;}
 </style>
+<script>
+	//function doGet(){
+	//	$.getJSON($SCRIPT_ROOT + '/register', {
+        //	username: $('input[name="username"]').val(),
+        //	passwd: $('input[name="passwd"]').val()
+      //	});}
+		function doPost() 
+		{       //url = $SCRIPT_ROOT + url;
+			var url = "/register";
+			$.post(url, {
+				username: $('input[name="username"]').val(),
+				passwd: $('input[name="passwd"]').val()
+			});
+		}
+</script>
 </body>
 </html>
