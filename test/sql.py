@@ -1,6 +1,7 @@
 import pymysql
+import config
 
-conn=pymysql.connect(host = '127.0.0.1' # 连接名称，默认127.0.0.1
+conn=pymysql.connect(host = config.host # 连接名称，默认127.0.0.1
 ,user = 'root' # 用户名
 ,passwd='6iuVhYwmxC' # 密码
 ,port= 33069 # 端口，默认为3306
