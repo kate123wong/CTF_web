@@ -8,15 +8,15 @@
 
 **login.html**登陆界面
 
-![](img/login效果图.png)
+<img src="img/login效果图.png" style="zoom:33%;" />
 
 **register.html**注册界面
 
-![](img/register效果图.png)
+<img src="img/register效果图.png" style="zoom:33%;" />
 
 **index.html**首页界面，用户登录后可见
 
-![](img/首页效果图.png)
+<img src="img/首页效果图.png" style="zoom:33%;" />
 
 **hello.py**调用admin.html的测试样例，执行时cd到test目录下然后
 
