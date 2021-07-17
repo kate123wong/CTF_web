@@ -22,6 +22,41 @@ app = Flask(__name__)
 def hello():
     return render_template('login.html')
 
+
+
+@app.route('/user/index',methods=['POST'])
+def userIndex():
+    status = 210
+    #判断是否是登陆状态
+    username = request.form.get('username')
+    passwd = request.form.get('passwd')
+    session = request.form.get('session')
+
+    #在数据库中查询该用户是否已经注册以及密码是否正确、是否登陆
+    #userIndex是个人页面，个人页面只有一个session，所以不用在session表中查询
+    cur = conn.cursor()
+    sql="select * from Users where username = %s and 3passwd2 = %s and session = %s"
+    params = (username,passwd,session)
+    try:
+        cur.execute(sql,params)
+        data = cur.fetchall()
+        conn.commit() # 提交到数据库执行
+    except Exception as e:
+        print(e)
+        conn.rollback()# 如果发生错误则回滚
+
+        #the username has been registered,he can login in.
+    if len(data) == 1:
+        status = 208
+        html = render_template('/user/index.html')
+        return json.dumps({"status" : status, "html" : html})
+    # user hasn't been registered, or passwd is wrong or he doesn't login in.
+    return json.dumps({"status" : 207})
+
+
+
+
+
 @app.route('/login',methods=['GET'])
 def tologin():
     return render_template('login.html')
@@ -136,8 +171,36 @@ def index():
         status = 208
         html = render_template('/index.html')
         return json.dumps({"status" : status, "html" : html})
-    else: # user hasn't been registered, or passwd is wrong or he doesn't login in.
-        return json.dumps({"status" : 207})
+     # user hasn't been registered, or passwd is wrong or he doesn't login in.
+    return json.dumps({"status" : 207})
+
+@app.route('/key',methods=['GET'])
+def getkey():
+
+    uid = request.args.get("id")
+        
+    print(uid)
+
+    #username = request.args.get('username')
+    #passwd = request.args.get('passwd')
+    #if(!username || !passwd):
+    #    return "username or password doesn't"
+    #sql = "select * from Users where username = %s and passwd = %s"
+    #sql = "select * from Users where username = '%s' and 3passwd2 = '%s' "%(username,passwd)
+    sql = "select * from Users where uid='%s' "%(uid)
+    print(sql)
+    cur = conn.cursor()
+    try:
+        #cur.execute(sql,params)
+        cur.execute(sql)
+        data = cur.fetchall()
+        conn.commit()
+        print("data is:",data)
+        return "message:"+json.dumps(data);
+    except Exception as e:
+        print( e )
+        conn.rollback()
+    return "user doesn't existed or the password is wrong!"
 
 
 if __name__ == "__main__":
