@@ -20,12 +20,21 @@
 ### 前后端开发注意事项：  
 **数据库中name等字段存在长度限制，flask相关代码部分需要进行实现长度限制的完善，以免接收过长数据数据库端报错**
 
-+ 用户密码取md5hash
-+ session保持会话。
-+ 前端个人主页
-+   
++ 用户密码取md5hash、admin账号是base64编码值
 
-### 二维码相关工作均已完成  
++ key放在admin的备注里
+
++ 前端个人主页
+
++ 密码用户名特殊字符过滤
+
++ 评论可以显示、传后端
+
++ 数据库payload=`1'or'1'=='1`,url是：`http://hostip/index`.
+
+  `http://hpstip/index?id=1'or'1'=='1`可以返回User数据库，可以得到admin的密码和key字段的值。
+
+### 二维码相关工作均已完成 
 * admin二维码 `admin.png`  
 [二维码](https://github.com/kate123wong/CTF_web/blob/development/doc/%E4%BA%8C%E7%BB%B4%E7%A0%81%E7%9B%B8%E5%85%B3%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3/image/admin.png)  
 * 普通二维码 `origin1.png`  
