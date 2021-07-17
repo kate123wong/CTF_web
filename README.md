@@ -18,6 +18,7 @@
 | 2021.7.20-                | 完成文档完善、完成展示PPT的制作                              |              |
 
 ### 前后端开发注意事项：  
+<<<<<<< HEAD
 **数据库中name等字段存在长度限制，flask相关代码部分需要进行实现长度限制的完善，以免接收过长数据数据库端报错**
 
 + 用户密码取md5hash、admin账号是base64编码值
@@ -39,3 +40,6 @@
 [二维码](https://github.com/kate123wong/CTF_web/blob/development/doc/%E4%BA%8C%E7%BB%B4%E7%A0%81%E7%9B%B8%E5%85%B3%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3/image/admin.png)  
 * 普通二维码 `origin1.png`  
 [二维码](https://github.com/kate123wong/CTF_web/blob/development/doc/%E4%BA%8C%E7%BB%B4%E7%A0%81%E7%9B%B8%E5%85%B3%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3/image/origin1.png)
+=======
+**数据库中name等字段存在长度限制，flask相关代码部分需要进行实现长度限制的完善，以免接收过长数据数据库端报错**
+>>>>>>> f2783e82bb5579e5c5c590c981321bbb5644dfaa
