@@ -104,7 +104,9 @@ function doPost(url)
 		if (d.status && d.status == 206 && d.session){
                         $("#status").text("success login in")
                         $("#status").show()
-			setSession(d.session)
+			setStorage("session", d.session)
+			setStorage("username", username)
+			setStorage("passwd", passwd)
 			doPost_index()
 		}
 		if(d.status && d.status ==207){
@@ -115,21 +117,25 @@ function doPost(url)
 	});
 	return true;
 }
-function setSession(session){
-	sessionStorage.setItem("session",session)
+function setStorage(cname,cvalue){
+	sessionStorage.setItem(cname,cvalue)
 }
 function doPost_index(){
-	var username=$('input[name="username"]').val();
-	var passwd=$('input[name="passwd"]').val();
 	$.post("/index",{
-		username:username,
-		passwd:passwd,
+		username:sessionStorage.getItem("username"),
+		passwd:sessionStorage.getItem("passwd"),
 		session:sessionStorage.getItem("session")
 	},function( d ){
+		if(typeof d == 'undefined'){
+			$("#status").text("there are some error")
+                        $("#status").show()
+			return false;
+		}
 		d = $.parseJSON(d);
 		if(d && d.status &&d.status==208 && d.html){
+			console.log("正常请求到index页面")
 			$("html").html(d.html)
-			console.log(d.html)
+			console.log("afet")
 		}
 		if(d && d.status == 207){
 			$("#status").text("failed to login in, check your password or username")
