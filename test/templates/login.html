@@ -79,8 +79,7 @@
 function doPost(url) 
 {
 	var username=$('input[name="username"]').val();
-        var passwd=$('input[name="passwd"]').val();
-
+	var passwd=$('input[name="passwd"]').val();
 	if(username=="" || passwd==""){
 		$("#status").text("username or password is null")
                 $("#status").show()
@@ -93,20 +92,51 @@ function doPost(url)
 		d=$.parseJSON(d);
 		// console.log(d);
 		// console.log($('html'));
-		if (d.status && d.status == 201)
+		if (d.status && d.status == 201){
 			$("#status").text("the user hasn't been registered")
 			$("#status").show()
+		}
 			//$('html').html( d.html );
-		if (d.status && d.status == 205)
+		if (d.status && d.status == 205){
                         $("#status").text("password is error")
                         $("#status").show()
-		if (d.status && d.status == 206)
+		}
+		if (d.status && d.status == 206 && d.session){
                         $("#status").text("success login in")
                         $("#status").show()
+			setSession(d.session)
+			doPost_index()
+		}
+		if(d.status && d.status ==207){
+			$("#status").text("failed to login in,please try it again later")
+                        $("#status").show()
+		}
 
-		console.log(d.html);
 	});
 	return true;
+}
+function setSession(session){
+	sessionStorage.setItem("session",session)
+}
+function doPost_index(){
+	var username=$('input[name="username"]').val();
+	var passwd=$('input[name="passwd"]').val();
+	$.post("/index",{
+		username:username,
+		passwd:passwd,
+		session:sessionStorage.getItem("session")
+	},function( d ){
+		d = $.parseJSON(d);
+		if(d && d.status &&d.status==208 && d.html){
+			$("html").html(d.html)
+			console.log(d.html)
+		}
+		if(d && d.status == 207){
+			$("#status").text("failed to login in, check your password or username")
+			$("#status").show()
+		}
+
+	})
 }
 </script>
 </body>

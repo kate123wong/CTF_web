@@ -1,9 +1,12 @@
 from flask import Flask,render_template, request
+from hashlib import md5    
 import requests
 import pymysql
 import config
 import base64
 import json
+import time
+import random
 
 conn=pymysql.connect(host = config.host # 连接名称，默认127.0.0.1
 ,user = 'root' # 用户名
@@ -38,13 +41,23 @@ def login():
         cur.execute(sql,params) # 执行查询的sql语句
         data = cur.fetchall()
         conn.commit() # 提交到数据库执行
-        cursor.close()
     except:
         conn.rollback()# 如果发生错误则回滚
-    #如果没有注册，进入注册页面
     if len(data) == 1:
+        #只要用户已经注册并且密码正确，就重新生成session值，不管现在是否是登陆状态。
         if data[0][2] == passwd:
-            status = 206
+            session = md5((str(time.time()) + str(random.random()) ).encode('utf8')).hexdigest()
+            sql_set_session = "update Users set session= %s where username= %s and 3passwd2= %s"
+            params_set_session = (session,username,passwd)
+            try:
+                cur.execute(sql_set_session,params_set_session)
+                conn.commit()
+                status = 206 # 成功登陆
+                return json.dumps({ 'status': status, 'session' : session})
+            except Exception as e:
+                print("failed login in")
+                conn.rollback()
+                status = 207 #登陆失败
         else:
             status = 205
     else:
@@ -105,24 +118,26 @@ def index():
     status = 210
     username = request.form.get('username')
     passwd = request.form.get('passwd')
-    print(username, passwd)
+    session = request.form.get('session')
     
     cur = conn.cursor()
-    sql="select * from Users where username = %s"
-    params = (username)
-    print(sql,params)
+    sql="select * from Users where username = %s and 3passwd2 = %s and session = %s"
+    params = (username,passwd,session)
     try:
-        cur.execute(sql,params) # 执行插入的sql语句
+        cur.execute(sql,params)
         data = cur.fetchall()
         conn.commit() # 提交到数据库执行
-    except:
+    except Exception as e:
+        print(e)
         conn.rollback()# 如果发生错误则回滚
 
         #the username has been registered,he can login in.
     if len(data) == 1:
-        return render_template('index.html')
-    else: # user hasn't been registered, he must register first.
-        return render_template('register.html')
+        status = 208
+        html = render_template('/index.html')
+        return json.dumps({"status" : status, "html" : html})
+    else: # user hasn't been registered, or passwd is wrong or he doesn't login in.
+        return json.dumps({"status" : 207})
 
 
 if __name__ == "__main__":
