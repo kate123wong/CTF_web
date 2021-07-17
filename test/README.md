@@ -26,7 +26,11 @@
 
 **templates/admin**存放admin用户的个人主页index.html
 
-**user/index.html**个人主页界面，，用户登录后可见
+**admin/index.html**个人主页界面，破解后可见
+
+![](img/admin效果图.png)
+
+**user/index.html**个人主页界面，用户登录后可见
 
 ![](img/user效果图.png)
 
