@@ -107,7 +107,8 @@ function doPost(url)
 			setStorage("session", d.session)
 			setStorage("username", username)
 			setStorage("passwd", passwd)
-			doPost_index()
+			window.location.href="/index"
+			//doPost_index()
 		}
 		if(d.status && d.status ==207){
 			$("#status").text("failed to login in,please try it again later")
@@ -133,9 +134,11 @@ function doPost_index(){
 		}
 		d = $.parseJSON(d);
 		if(d && d.status &&d.status==208 && d.html){
-			console.log("正常请求到index页面")
-			$("html").html(d.html)
-			console.log("afet")
+			console.log("d.html is:-----------",d.html)
+			// $("html").html(d.html)
+			// consloe.log(doc.head)
+			$('html').html( d.html );
+			console.log("after")
 		}
 		if(d && d.status == 207){
 			$("#status").text("failed to login in, check your password or username")
