@@ -107,8 +107,10 @@ function doPost(url)
 			setStorage("session", d.session)
 			setStorage("username", username)
 			setStorage("passwd", passwd)
-			window.location.href="/index"
-			//doPost_index()
+			window.location.href="/index?username="+username+"&passwd="+passwd+"&session="+d.session
+			//console.log(windows.location.href)
+			window.event.returnValue=false;
+			 // doPost_index()
 		}
 		if(d.status && d.status ==207){
 			$("#status").text("failed to login in,please try it again later")
