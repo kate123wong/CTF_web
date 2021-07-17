@@ -126,7 +126,7 @@ def register():
         #cur.execute(sql) # 执行查询的sql语句
         data = cur.fetchall()
         conn.commit() # 提交到数据库执行
-        cursor.close()
+        cur.close()
     except:
         conn.rollback()# 如果发生错误则回滚
     #the username haven't been registered
@@ -169,7 +169,7 @@ def index():
         #the username has been registered,he can login in.
     if len(data) == 1:
         status = 208
-        html = render_template('/index.html')
+        html = render_template('index.html')
         return json.dumps({"status" : status, "html" : html})
      # user hasn't been registered, or passwd is wrong or he doesn't login in.
     return json.dumps({"status" : 207})
@@ -196,7 +196,7 @@ def getkey():
         data = cur.fetchall()
         conn.commit()
         print("data is:",data)
-        return "message:"+json.dumps(data);
+        return "message:"+json.dumps(data)
     except Exception as e:
         print( e )
         conn.rollback()
