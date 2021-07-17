@@ -37,8 +37,8 @@
 	</section>
 	<div class="news_zi">
 		<div class="top_qie">
-			<a href="">首页</a>
-			<a href="" class="active">个人中心</a>
+			<a href="#" onclick="doGet()">首页</a>
+			<a href="#" class="active">个人中心</a>
 		</div>
         <ul class="news_zi_ul">
 			<li class="clearfix">
@@ -111,7 +111,14 @@
     </div>
     </div>
 </div>
+<script>
+function doGet(){
+        username=sessionStorage.getItem("username");
+        window.location.href='/index'+"?username="+username+"&passwd="+sessionStorage.getItem("passwd")+"&session="+sessionStorage.getItem("session")
+        window.event.returnValue=false;
+}
 
+</script>
 
 </body>
 </html>

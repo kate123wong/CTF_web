@@ -166,7 +166,7 @@ def TODO_toUserindex():
      # user hasn't been registered, or passwd is wrong or he doesn't login in.
     return json.dumps({"status" : 207})
 
-@app.route('/user/index',methods=['GET'])
+@app.route('/user',methods=['GET'])
 def toUserIndex():
     status = 210
     username = request.args.get('username')
