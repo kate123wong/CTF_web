@@ -1,1 +1,124 @@
-<!--占坑-->
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>fakebook</title>
+	<meta name="keywords" content="fakebook">
+	<meta name="description" content="fakebook">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	
+	<!-- include main css -->
+	<link rel="stylesheet" type="text/css" href="static/css/slick.css"/>	
+	<link rel="stylesheet" type="text/css" href="static/css/bootstrap.css"/>
+	<link rel="stylesheet" type="text/css" href="static/css/jquery.mmenu.all.css"/>
+	<link rel="stylesheet" type="text/css" href="static/css/style.css"/>
+	<link href="static/font-awesome-4.5.0/css/font-awesome.min.css" rel='stylesheet' type='text/css' media="all" />
+	<link rel="stylesheet" type="text/css" href="static/css/animate.css"/>
+	
+	<!--[if lt IE 9]>
+    <script src="http://apps.bdimg.com/libs/html5shiv/r29/html5.min.js"></script>
+    <script src="http://apps.bdimg.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!--blog-->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="keywords" content="test" />
+    <meta name="description" content="" />
+    <meta name="generator" content="emlog" />
+    <link href="http://www.cyxitong.com/content/templates/default/main.css" rel="stylesheet" type="text/css" />
+
+</head>
+<body>
+<div>	
+	<!--banner  start-->
+	<section class="banner_zi">
+	    <div><img src="static/img/user/bg.jpg" alt=""></div>	   
+	</section>
+	<div class="news_zi">
+		<div class="top_qie">
+			<a href="#" onclick="doGet()">首页</a>
+			<a href="#" class="active">个人中心</a>
+		</div>
+        <ul class="news_zi_ul">
+			<li class="clearfix">
+				<div class="news_left clearfix">
+					<div class="pic">
+						<a ><img src="static/img/user/logo.png" alt="" /></a>
+						<i></i>
+					</div>
+					<div class="txt">
+						<a>Profile</a>
+						<p>
+							培根在不经意间这样说过，深窥自己的心，而后发觉一切的奇迹在你自己。这不禁令我深思。对我个人而言，熊猫不仅仅是一个重大的事件，还可能会改变我的人生。我们都知道，只要有意义，那么就必须慎重考虑。
+						</p>
+					</div>
+				</div>
+				<div class="news_right clearfixt">
+					<div class="pic">
+						<a ><img src="static/img/user/QR.png" alt="" /></a>
+						<i></i>
+					</div>
+                    <span>向我付款<span>
+				</div>
+			</li>
+        </ul>
+	</div>
+</div>
+<div class="syzz">
+    <div class="syzz_con">
+        <div class="left">
+            <h2>记录这一刻</h2>
+            <h3><textarea name="content" rows="10%" cols="50%"></textarea></h3>
+            <div class="btn">
+                <button type="submit" onclick="doPost('/commend')">发布</button>
+            </div>
+        </div>
+    <div class="right">
+        <div class="fang_t">
+            <span>可能认识的人</span>
+        </div>
+        <div class="fang_c">
+            <a>
+                <span>username1</span>
+            </a>
+        </div>
+        <div class="fang_c">
+            <a>
+                <span>username2</span>
+            </a>
+        </div>
+        <div class="fang_c">
+            <a>
+                <span>username3</span>
+            </a>
+        </div>
+        <div class="fang_c">
+            <a>
+                <span>username4</span>
+            </a>
+        </div>
+        <div class="fang_c">
+            <a>
+                <span>username5</span>
+            </a>
+        </div>
+        <div class="fang_c">
+            <a>
+                <span>username6</span>
+            </a>
+        </div>
+    </div>
+    </div>
+</div>
+<script>
+function doGet(){
+        username=sessionStorage.getItem("username");
+        window.location.href='/index'+"?username="+username+"&passwd="+sessionStorage.getItem("passwd")+"&session="+sessionStorage.getItem("session")
+        window.event.returnValue=false;
+}
+
+</script>
+
+</body>
+</html>
