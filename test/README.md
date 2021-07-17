@@ -2,9 +2,9 @@
 
 ## 结构说明
 
-**static**存放网页所需的css等
+**static**存放网页所需的css、js等
 
-**templates**存放.py文件和主要html
+**templates**存放.py和.html
 
 **login.html**登陆界面
 
@@ -16,7 +16,7 @@
 
 **index.html**首页界面
 
-![](img/首页效果图.png)
+![](img/index效果图.png)
 
 **test.py**调用html的测试样例，执行时cd到test目录下然后
 
@@ -38,4 +38,3 @@
 
 ## 需求分析
 
-- index.html的href里需要添加个人主页的链接
