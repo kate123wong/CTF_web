@@ -23,4 +23,10 @@
 + 用户密码取md5hash
 + session保持会话。
 + 前端个人主页
-+ 
++   
+
+### 二维码相关工作均已完成  
+* admin二维码 `admin.png`  
+[二维码](https://github.com/kate123wong/CTF_web/blob/development/doc/%E4%BA%8C%E7%BB%B4%E7%A0%81%E7%9B%B8%E5%85%B3%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3/image/admin.png)  
+* 普通二维码 `origin1.png`  
+[二维码](https://github.com/kate123wong/CTF_web/blob/development/doc/%E4%BA%8C%E7%BB%B4%E7%A0%81%E7%9B%B8%E5%85%B3%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3/image/origin1.png)
