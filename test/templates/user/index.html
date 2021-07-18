@@ -132,12 +132,14 @@ $(document).ready(function(){
                 session:sessionStorage.getItem("session")
         },function( d ){
                 d = $.parseJSON(d);
-		$("#username1").text(d.username1)
-		$("#username2").text(d.username2)
-		$("#username3").text(d.username3)
-		$("#username4").text(d.username4)
-		$("#username5").text(d.username5)
-		$("#username6").text(d.username6)
+		if(d && d.status && d.status == 208 && d.friends){
+			$("#username1").text(d.friends.username1)
+			$("#username2").text(d.friends.username2)
+			$("#username3").text(d.friends.username3)
+			$("#username4").text(d.friends.username4)
+			$("#username5").text(d.friends.username5)
+			$("#username6").text(d.friends.username6)
+		}
 	});
 
 });
@@ -148,11 +150,9 @@ function getMyself(){
                 passwd:sessionStorage.getItem("passwd"),
                 session:sessionStorage.getItem("session")
         },function( d ){
-		console.log(d)
                 d = $.parseJSON(d);
 		if(d && d.status == 208 && d.data){
 			console.log(d.data)
-			console.log(d.data[0])
 			$("#yourself").text(d.data)
 		}
 		if(d && d.status == 210){
