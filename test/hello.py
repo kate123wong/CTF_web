@@ -1,13 +1,14 @@
 from flask import Flask,render_template, request
-from hashlib import md5    
+from hashlib import md5
 import requests
-import pymysql
+import pymysql,threading
 import config
 import base64
 import json
 import time
 import random
 
+lock=threading.Lock()
 conn=pymysql.connect(host = config.host # 连接名称，默认127.0.0.1
 ,user = 'root' # 用户名
 ,passwd='6iuVhYwmxC' # 密码
@@ -24,13 +25,18 @@ def hello():
 
 @app.route('/friends',methods=['POST'])
 def getFriends():
-    cur = conn.cursor()
+    #cur = conn.cursor()
     sql="select username from Users"
     print(sql)
     data=tuple()
+    #conn.ping(reconnect=True)
+    cur = conn.cursor()
     try:
+        lock.acquire()
         cur.execute(sql) # 执行查询的sql语句
+        lock.release()
         data = cur.fetchall()
+        print(data)
         conn.commit() # 提交到数据库执行
     except:
         conn.rollback()# 如果发生错误则回滚
@@ -47,7 +53,8 @@ def getFriends():
     for key in dic.keys():
         friends["username"+str(i)] = dic[key];
         i = i + 1
-    return json.dumps(friends)
+    status = 208
+    return json.dumps({"status":status,"friends":friends})
 
 @app.route('/login',methods=['GET'])
 def tologin():
@@ -62,10 +69,10 @@ def login():
     passwd = request.form.get('passwd')
     
     #在数据库中查询该用户名是否注册已经密码是否正确
-    cur = conn.cursor()
     sql="select * from Users where username = %s"
     params = (username)
     try:
+        cur = conn.cursor()
         cur.execute(sql,params) # 执行查询的sql语句
         data = cur.fetchall()
         conn.commit() # 提交到数据库执行
@@ -81,11 +88,13 @@ def login():
                 cur.execute(sql_set_session,params_set_session)
                 conn.commit()
                 status = 206 # 成功登陆
+                cur.close()
                 return json.dumps({ 'status': status, 'session' : session})
             except Exception as e:
                 print("failed login in")
                 conn.rollback()
                 status = 207 #登陆失败
+                cur.close()
         else:
             status = 205
     else:
@@ -93,6 +102,7 @@ def login():
         # return render_template('register.html')
         #html = render_template('register.html')
         status = 201
+    cur.close()
     return json.dumps({ 'status': status})
 
 @app.route('/register',methods=['GET'])
@@ -216,33 +226,38 @@ def toUserIndex():
     return "You have not login in."
 
 
-@app.route('/key',methods=['GET'])
+@app.route('/myself',methods=['POST'])
 def getkey():
-
-    uid = request.args.get("id")
-        
-    print(uid)
-
-    #username = request.args.get('username')
-    #passwd = request.args.get('passwd')
-    #if(!username || !passwd):
-    #    return "username or password doesn't"
+    session = request.form.get("session")
+    username = request.form.get('username')
+    passwd = request.form.get('passwd')
+    if(username is None  or passwd is None or session is None):
+        status = 209
+        return json.dumps({"status" : status})
     #sql = "select * from Users where username = %s and passwd = %s"
-    #sql = "select * from Users where username = '%s' and 3passwd2 = '%s' "%(username,passwd)
-    sql = "select * from Users where uid='%s' "%(uid)
+    sql = "select * from Users where username = '%s' and 3passwd2 = '%s' and session = '%s' "%(username,passwd,session)
+    #sql = "select * from Users where uid='%s' "%(uid)
     print(sql)
+    conn.ping(reconnect=True)
     cur = conn.cursor()
     try:
         #cur.execute(sql,params)
+        print("begin searching...")
+        lock.acquire()
         cur.execute(sql)
+        lock.release()
         data = cur.fetchall()
         conn.commit()
-        print("data is:",data)
-        return "message:"+json.dumps(data)
+        cur.close()
+        print("--------------------")
+        print(data)
+        print("--------------------")
+        return json.dumps({"status" : 208, "data" : data})
     except Exception as e:
         print( e )
         conn.rollback()
-    return "user doesn't existed or the password is wrong!"
+        cur.close()
+    return json.dumps({"status":210})
 
 
 if __name__ == "__main__":
