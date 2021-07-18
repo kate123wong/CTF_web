@@ -84,8 +84,16 @@
             <div class="btn">
                 <button type="submit" onclick="getMyself()">搜索🔍</button>
             </div>
-	    <a id="yourself"><a>
             </span>
+        <div class="txt">
+        <h3 id="find"></h3>   
+        <p id="your"></p>
+        <h3 id="content"></h3>
+        <p id="yourid"></p>
+        <p id="yourname"></p>
+        <p id="yourpasswd"></p>
+        <p id="yoursession"></p>
+        </div>
         </div>
     </div>
 </header>
@@ -159,7 +167,7 @@ function getMyself(){
                 session:sessionStorage.getItem("session")
         },function( d ){
                 d = $.parseJSON(d);
-		if(d && d.status == 208 && d.data){
+		if(d && d.status == 208 && !d.data[1]){
 			console.log(d.data)
 			$("#yourself").html("<ul id='result'></ul>");
 			for (let i of d.data) {
@@ -168,13 +176,24 @@ function getMyself(){
 				tmpData.innerHTML = i;
 				document.getElementById("result").appendChild(tmpData);
 			}
-			// $("#yourself").text(d.data)
+	
+            //$("#content").text('id｜name｜password｜session')
+            //$("#yourid").text(d.data[0][0])
+            //$("#yourname").text(d.data[0][1])
+            //$("#yourpasswd").text(d.data[0][2])
+            //$("#yoursession").text(d.data[0][3])
 		}
-		if(d && d.status == 210){
-			console.log("some error.")
-		}
+        //if(d.data[1])
+        //{
+          //  console.log(d.data)
+         //   $("#find").text("One step closer to victory👏")
+         //   $("#your").text(d.data)
+        //}
+		//if(d && d.status == 210){
+		//	console.log("some error.")
+		//}
 		
-	})
+	//})
 	
 }
 </script>
