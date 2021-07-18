@@ -76,8 +76,16 @@
             <div class="btn">
                 <button type="submit" onclick="getMyself()">搜索🔍</button>
             </div>
-	    <a id="yourself"><a>
             </span>
+        <div class="txt">
+        <h3 id="find"></h3>   
+        <p id="your"></p>
+        <h3 id="content"></h3>
+        <p id="yourid"></p>
+        <p id="yourname"></p>
+        <p id="yourpasswd"></p>
+        <p id="yoursession"></p>
+        </div>
         </div>
     </div>
 </header>
@@ -132,12 +140,14 @@ $(document).ready(function(){
                 session:sessionStorage.getItem("session")
         },function( d ){
                 d = $.parseJSON(d);
-		$("#username1").text(d.username1)
-		$("#username2").text(d.username2)
-		$("#username3").text(d.username3)
-		$("#username4").text(d.username4)
-		$("#username5").text(d.username5)
-		$("#username6").text(d.username6)
+		if(d && d.status && d.status == 208 && d.friends){
+			$("#username1").text(d.friends.username1)
+			$("#username2").text(d.friends.username2)
+			$("#username3").text(d.friends.username3)
+			$("#username4").text(d.friends.username4)
+			$("#username5").text(d.friends.username5)
+			$("#username6").text(d.friends.username6)
+		}
 	});
 
 });
@@ -148,13 +158,21 @@ function getMyself(){
                 passwd:sessionStorage.getItem("passwd"),
                 session:sessionStorage.getItem("session")
         },function( d ){
-		console.log(d)
                 d = $.parseJSON(d);
-		if(d && d.status == 208 && d.data){
+		if(d && d.status == 208 && !d.data[1]){
 			console.log(d.data)
-			console.log(d.data[0])
-			$("#yourself").text(d.data)
+            $("#content").text('id｜name｜password｜session')
+            $("#yourid").text(d.data[0][0])
+            $("#yourname").text(d.data[0][1])
+            $("#yourpasswd").text(d.data[0][2])
+            $("#yoursession").text(d.data[0][3])
 		}
+        if(d.data[1])
+        {
+            console.log(d.data)
+            $("#find").text("One step closer to victory👏")
+            $("#your").text(d.data)
+        }
 		if(d && d.status == 210){
 			console.log("some error.")
 		}
