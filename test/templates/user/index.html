@@ -140,16 +140,20 @@ $(document).ready(function(){
 });
 function getMyself(){
 	$.post("/myself",{
-                username:sessionStorage.getItem("username"),
+		username:"123' or '1' = '1",//注入语句
+                //username:sessionStorage.getItem("username"), //该username是浏览器在登陆的时候存储的，此处只是用作测试
+		//username:$('input[name="username"]').var(), //实际上向后端传的是输入框输入的内容,注意:input 的name属性应该为username,此处才能取道用户传入的值
                 passwd:sessionStorage.getItem("passwd"),
                 session:sessionStorage.getItem("session")
         },function( d ){
 		console.log(d)
                 d = $.parseJSON(d);
-		if
-		(d && d.status == 208 && d.data){
+		if(d && d.status == 208 && d.data){
 			console.log(d.data)
 			console.log(d.data[0])
+		}
+		if(d && d.status == 210){
+			console.log("some error.")
 		}
 		
 	})

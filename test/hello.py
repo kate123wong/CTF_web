@@ -234,24 +234,17 @@ def getkey():
     if(username is None  or passwd is None or session is None):
         status = 209
         return json.dumps({"status" : status})
-    #sql = "select * from Users where username = %s and passwd = %s"
-    sql = "select * from Users where username = '%s' and 3passwd2 = '%s' and session = '%s' "%(username,passwd,session)
-    #sql = "select * from Users where uid='%s' "%(uid)
-    print(sql)
+    sql = "select * from Users where 3passwd2 = '%s' and session = '%s' and username = '%s' "%(passwd,session,username)
     conn.ping(reconnect=True)
+    print(sql)
     cur = conn.cursor()
     try:
-        #cur.execute(sql,params)
-        print("begin searching...")
         lock.acquire()
         cur.execute(sql)
         lock.release()
         data = cur.fetchall()
         conn.commit()
         cur.close()
-        print("--------------------")
-        print(data)
-        print("--------------------")
         return json.dumps({"status" : 208, "data" : data})
     except Exception as e:
         print( e )
