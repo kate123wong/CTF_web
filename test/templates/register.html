@@ -14,7 +14,9 @@
     <!-- Custom Styles -->
     <link rel="stylesheet" type="text/css" href="static/styles-login.css">
     <script type=text/javascript src="{{
-  	url_for('static', filename='jquery-3.6.0.js') }}"></script>
+  	url_for('static', filename='js/jquery-3.6.0.js') }}"></script>
+     <script type=text/javascript src="{{
+        url_for('static', filename='js/md5.min.js') }}"></script>
     <title>Register</title>
   </head>
   <body>
@@ -72,8 +74,8 @@ function doPost(url)
         }
 
 	$.post(url, {
-		username: $('input[name="username"]').val(),
-		passwd: $('input[name="passwd"]').val()
+		username: username,
+		passwd: md5(passwd)
 	}, function (d) {
 		d=$.parseJSON(d);
 		if(d.status && d.status == 202){

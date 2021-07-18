@@ -2,7 +2,10 @@
 <html lang="en">
   <head>
     <script type=text/javascript src="{{
-  	url_for('static', filename='jquery-3.6.0.js') }}"></script>
+        url_for('static', filename='js/md5.min.js') }}"></script>
+
+    <script type=text/javascript src="{{
+  	url_for('static', filename='js/jquery-3.6.0.js') }}"></script>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -79,7 +82,8 @@
 function doPost(url) 
 {
 	var username=$('input[name="username"]').val();
-	var passwd=$('input[name="passwd"]').val();
+	var passwd=md5($('input[name="passwd"]').val());
+	console.log(passwd)
 	if(username=="" || passwd==""){
 		$("#status").text("username or password is null")
                 $("#status").show()

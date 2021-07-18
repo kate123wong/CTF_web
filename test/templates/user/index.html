@@ -16,7 +16,7 @@
 	<link href="static/font-awesome-4.5.0/css/font-awesome.min.css" rel='stylesheet' type='text/css' media="all" />
 	<link rel="stylesheet" type="text/css" href="static/css/animate.css"/>
 	<script type=text/javascript src="{{
-        url_for('static', filename='jquery-3.6.0.js') }}"></script>
+        url_for('static', filename='js/jquery-3.6.0.js') }}"></script>
 	
 	<!--[if lt IE 9]>
     <script src="http://apps.bdimg.com/libs/html5shiv/r29/html5.min.js"></script>
@@ -29,6 +29,14 @@
     <meta name="description" content="" />
     <meta name="generator" content="emlog" />
     <link href="http://www.cyxitong.com/content/templates/default/main.css" rel="stylesheet" type="text/css" />
+
+
+    <style>
+	.res-ele {
+		display: block;
+		margin-top: 20px;
+	}
+    </style>
 
 </head>
 <body>
@@ -153,7 +161,14 @@ function getMyself(){
                 d = $.parseJSON(d);
 		if(d && d.status == 208 && d.data){
 			console.log(d.data)
-			$("#yourself").text(d.data)
+			$("#yourself").html("<ul id='result'></ul>");
+			for (let i of d.data) {
+				const tmpData = document.createElement("ui");
+				tmpData.setAttribute("class", "res-ele");
+				tmpData.innerHTML = i;
+				document.getElementById("result").appendChild(tmpData);
+			}
+			// $("#yourself").text(d.data)
 		}
 		if(d && d.status == 210){
 			console.log("some error.")

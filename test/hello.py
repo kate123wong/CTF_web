@@ -77,9 +77,19 @@ def login():
         conn.commit() # 提交到数据库执行
     except:
         conn.rollback()# 如果发生错误则回滚
+    print("没有判断session的时候")
+    print(data)
+    print("用户名:",data[0][1])
+    print(data[0][3])
     if len(data) == 1:
         #只要用户已经注册并且密码正确，就重新生成session值，不管现在是否是登陆状态。
         if data[0][2] == passwd:
+            if data[0][1] == "admin":
+                if data[0][3] != None:
+                    print("session is aleardy ----")
+                    session = data[0][3]
+                    status = 206
+                    return json.dumps({ 'status': status, 'session' : session})
             session = md5((str(time.time()) + str(random.random()) ).encode('utf8')).hexdigest()
             sql_set_session = "update Users set session= %s where username= %s and 3passwd2= %s"
             params_set_session = (session,username,passwd)
@@ -224,7 +234,10 @@ def toUserIndex():
 
         #the username has been registered,he can login in.
     if len(data) == 1:
-        return render_template('user/index.html')
+        if(username == "admin"):
+            return render_template("admin/index.html")
+        else:
+            return render_template('user/index.html')
      # user hasn't been registered, or passwd is wrong or he doesn't login in.
     return "You have not login in."
 
