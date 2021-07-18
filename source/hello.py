@@ -25,17 +25,14 @@ def hello():
 
 @app.route('/friends',methods=['POST'])
 def getFriends():
-    #cur = conn.cursor()
     sql="select username from Users"
     data=tuple()
-    #conn.ping(reconnect=True)
     cur = conn.cursor()
     try:
         lock.acquire()
         cur.execute(sql) # 执行查询的sql语句
         lock.release()
         data = cur.fetchall()
-        print(data)
         conn.commit() # 提交到数据库执行
     except:
         conn.rollback()# 如果发生错误则回滚
@@ -77,16 +74,11 @@ def login():
         conn.commit() # 提交到数据库执行
     except:
         conn.rollback()# 如果发生错误则回滚
-    print("没有判断session的时候")
-    print(data)
-    print("用户名:",data[0][1])
-    print(data[0][3])
     if len(data) == 1:
         #只要用户已经注册并且密码正确，就重新生成session值，不管现在是否是登陆状态。
         if data[0][2] == passwd:
             if data[0][1] == "admin":
                 if data[0][3] != None:
-                    print("session is aleardy ----")
                     session = data[0][3]
                     status = 206
                     return json.dumps({ 'status': status, 'session' : session})
@@ -100,7 +92,6 @@ def login():
                 cur.close()
                 return json.dumps({ 'status': status, 'session' : session})
             except Exception as e:
-                print("failed login in")
                 conn.rollback()
                 status = 207 #登陆失败
                 cur.close()
@@ -120,7 +111,6 @@ def toregister():
 
 @app.route('/register',methods=['POST'])
 def register():
-
     status = 210 #其他状态
     #获取注册的用户名和密码
     username = request.form.get('username')
@@ -128,9 +118,7 @@ def register():
     
     #在数据库中查询该用户名是否已经被注册
     sql="select * from Users where username = %s"
-    #sql="select * from Users where username = '" + username + "';"
     params = (username)
-    #print(sql)
     data = tuple()
     lock.acquire()
     try:
@@ -144,18 +132,14 @@ def register():
         conn.rollback()# 如果发生错误则回滚
     lock.release()
     #the username haven't been registered
-    print(data)
     if len(data) == 0:
         regist = 'insert into Users (username,3passwd2) values (%s, %s)'
-        print(regist)
         params_regist = (username,passwd)
         try:
-
             cur=conn.cursor()
             cur.execute(regist,params_regist)
             conn.commit()
             status = 202 #注册成功
-            print("success!")
         except:
             conn.rollback()
             status = 203 #注册失败
@@ -169,7 +153,6 @@ def toIndex():
     username = request.args.get('username')
     passwd = request.args.get('passwd')
     session = request.args.get('session')
-    print(username,passwd,session)
     cur = conn.cursor()
     sql="select * from Users where username = %s and 3passwd2 = %s and session = %s"
     params = (username,passwd,session)
@@ -178,7 +161,6 @@ def toIndex():
         data = cur.fetchall()
         conn.commit() # 提交到数据库执行
     except Exception as e:
-        print(e)
         conn.rollback()# 如果发生错误则回滚
 
         #the username has been registered,he can login in.
@@ -204,7 +186,6 @@ def TODO_toUserindex():
         data = cur.fetchall()
         conn.commit() # 提交到数据库执行
     except Exception as e:
-        print(e)
         conn.rollback()# 如果发生错误则回滚
 
         #the username has been registered,he can login in.
