@@ -16,17 +16,7 @@
 
 **index.html**首页界面
 
-<<<<<<< HEAD
-<img src="img/首页效果图.png" style="zoom:33%;" />
-=======
-![](img/index效果图.png)
->>>>>>> development
-
-**test.py**调用html的测试样例，执行时cd到test目录下然后
-
-`export FLASK_APP=test`
-
-`flask run`
+<img src="img/index效果图.png" style="zoom:33%;" />
 
 **templates/admin**存放admin用户的个人主页index.html
 
@@ -34,11 +24,19 @@
 
 ![](img/admin效果图.png)
 
-**user/index.html**个人主页界面，用户登录后可见
+**user/index.html**个人主页界面及三个搜索
 
-![](img/user效果图.png)
+- 搜自己
+
+  ![](img/搜自己.png)
+
+- 搜别人
+
+  ![](img/搜别人.png)
+
+- 注入
+
+  ![](img/注入.png)
 
 
-
-## 需求分析
 

@@ -75,30 +75,21 @@
         </ul>
 	</div>
 </div>
-<header class="header home_p">
-    <div class="container">
-        <h2>试试搜搜自己吧</h2>
-        <div class="search">
-            <span class="sea_x">
-            <input type="username"  id="" placeholder="请输入username" name="username">
-            <div class="btn">
-                <button type="submit" onclick="getMyself()">搜索🔍</button>
-            </div>
-            </span>
-      	<a id="yourself"></a>
-	<div class="txt">
-        <h3 id="find"></h3>   
-        <p id="your"></p>
-        <h3 id="content"></h3>
-        <p id="yourid"></p>
-        <p id="yourname"></p>
-        <p id="yourpasswd"></p>
-        <p id="yoursession"></p>
-        </div>
-        </div>
-    </div>
-</header>
 <div class="syzz">
+    <div class="syzz_con">
+        <div class="left">
+            <h2>试试搜搜自己吧</h2>
+            <div class="search">
+                <span class="sea_x">
+                <input type="username"  id="" placeholder="请输入username" name="username">
+                <div class="btn">
+                    <button type="submit" onclick="getMyself()">搜索🔍</button>
+                </div>
+                </span>
+            <h3 id="intro"></h3>
+            <a id="yourself"></a>
+            </div>
+        </div>
     <div class="right">
         <div class="fang_t">
             <span>可能认识的人</span>
@@ -170,6 +161,15 @@ function getMyself(){
                 d = $.parseJSON(d);
 		if(d && d.status == 208 && d.data){
 			console.log(d.data)
+            if (!d.data[1]&&d.data[0]){
+                $("#intro").text("ID|NAME|PASSWORD|SESSION")
+            }
+            if(d.data[1]){
+                $("#intro").text("One step closer to victory👏")
+            }
+            if(!d.data[0]){
+                $("#intro").text("Nobody else🤷‍♂️")
+            }
 			$("#yourself").html("<ul id='result'></ul>");
 			for (let i of d.data) {
 				const tmpData = document.createElement("ui");
@@ -182,20 +182,6 @@ function getMyself(){
                       console.log("some error.")
                 }
 	})
-
-	
-            //$("#content").text('id｜name｜password｜session')
-            //$("#yourid").text(d.data[0][0])
-            //$("#yourname").text(d.data[0][1])
-            //$("#yourpasswd").text(d.data[0][2])
-            //$("#yoursession").text(d.data[0][3])
-		
-        //if(d.data[1])
-        //{
-          //  console.log(d.data)
-         //   $("#find").text("One step closer to victory👏")
-         //   $("#your").text(d.data)
-        //}
 }
 </script>
 
