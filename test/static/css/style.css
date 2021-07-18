@@ -278,6 +278,15 @@ ul li {
   color: #84a76c;
   cursor: pointer;
 }
+.header .container .logo_right .search .sea_x .btn{
+  display: inline-block;
+  padding: 14px 90px;
+  font-size: 20px;
+  color: #81a849;
+  border-radius: 20px;
+  margin:auto;
+  font-weight: bold;
+}
 @media (max-width: 480px) {
   .header .container .logo_right .search .sea_x,
   .header_zi .container .logo_right .search .sea_x {
@@ -503,15 +512,7 @@ ul li {
   padding-bottom: 48.38709677419355%;
   display: block;
 }
-.syzz .syzz_con .left .btn{
-  display: inline-block;
-  padding: 14px 90px;
-  font-size: 20px;
-  color: #81a849;
-  border-radius: 20px;
-  margin:auto;
-  font-weight: bold;
-}
+
 .syzz .syzz_con .right {
   width: 20%;
   float: right;
