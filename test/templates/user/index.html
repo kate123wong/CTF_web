@@ -72,10 +72,11 @@
         <h2>试试搜搜自己吧</h2>
         <div class="search">
             <span class="sea_x">
-            <input type="" name="" id="" placeholder="请输入username">
+            <input type="username"  id="" placeholder="请输入username" name="username">
             <div class="btn">
-                <button type="submit" onclick="doPost('/commend')">搜索🔍</button>
+                <button type="submit" onclick="getMyself()">搜索🔍</button>
             </div>
+	    <a id="yourself"><a>
             </span>
         </div>
     </div>
@@ -137,17 +138,13 @@ $(document).ready(function(){
 		$("#username4").text(d.username4)
 		$("#username5").text(d.username5)
 		$("#username6").text(d.username6)
-		
-        	
-		getMyself();
 	});
 
 });
 function getMyself(){
+	var input_username = $('input[name="username"]').val();
 	$.post("/myself",{
-		username:"123' or '1' = '1",//注入语句
-                //username:sessionStorage.getItem("username"), //该username是浏览器在登陆的时候存储的，此处只是用作测试
-		//username:$('input[name="username"]').var(), //实际上向后端传的是输入框输入的内容,注意:input 的name属性应该为username,此处才能取道用户传入的值
+		username:input_username, //实际上向后端传的是输入框输入的内容,注意:input 的name属性应该为username,此处才能取道用户传入的值
                 passwd:sessionStorage.getItem("passwd"),
                 session:sessionStorage.getItem("session")
         },function( d ){
@@ -156,6 +153,7 @@ function getMyself(){
 		if(d && d.status == 208 && d.data){
 			console.log(d.data)
 			console.log(d.data[0])
+			$("#yourself").text(d.data)
 		}
 		if(d && d.status == 210){
 			console.log("some error.")
