@@ -22,6 +22,32 @@ app = Flask(__name__)
 def hello():
     return render_template('login.html')
 
+@app.route('/friends',methods=['POST'])
+def getFriends():
+    cur = conn.cursor()
+    sql="select username from Users"
+    print(sql)
+    data=tuple()
+    try:
+        cur.execute(sql) # 执行查询的sql语句
+        data = cur.fetchall()
+        conn.commit() # 提交到数据库执行
+    except:
+        conn.rollback()# 如果发生错误则回滚
+    dic ={}
+    while True:
+        id = (int)(random.random() * 10 + 1)
+        if id < len(data):
+            name = data[id][0]
+            dic[id]=name
+            if(len(dic) == 6):
+                break
+    friends={}
+    i = 1
+    for key in dic.keys():
+        friends["username"+str(i)] = dic[key];
+        i = i + 1
+    return json.dumps(friends)
 
 @app.route('/login',methods=['GET'])
 def tologin():

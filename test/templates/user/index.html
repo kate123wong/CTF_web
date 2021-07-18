@@ -15,6 +15,8 @@
 	<link rel="stylesheet" type="text/css" href="static/css/style.css"/>
 	<link href="static/font-awesome-4.5.0/css/font-awesome.min.css" rel='stylesheet' type='text/css' media="all" />
 	<link rel="stylesheet" type="text/css" href="static/css/animate.css"/>
+	<script type=text/javascript src="{{
+        url_for('static', filename='jquery-3.6.0.js') }}"></script>
 	
 	<!--[if lt IE 9]>
     <script src="http://apps.bdimg.com/libs/html5shiv/r29/html5.min.js"></script>
@@ -80,32 +82,32 @@
         </div>
         <div class="fang_c">
             <a>
-                <span>username1</span>
+                <span id = username1>username1</span>
             </a>
         </div>
         <div class="fang_c">
             <a>
-                <span>username2</span>
+                <span id = username2>username2</span>
             </a>
         </div>
         <div class="fang_c">
             <a>
-                <span>username3</span>
+                <span id = username3>username3</span>
             </a>
         </div>
         <div class="fang_c">
             <a>
-                <span>username4</span>
+                <span id = username4>username4</span>
             </a>
         </div>
         <div class="fang_c">
             <a>
-                <span>username5</span>
+                <span id = username5>username5</span>
             </a>
         </div>
         <div class="fang_c">
             <a>
-                <span>username6</span>
+                <span id = username6>username6</span>
             </a>
         </div>
     </div>
@@ -117,6 +119,23 @@ function doGet(){
         window.location.href='/index'+"?username="+username+"&passwd="+sessionStorage.getItem("passwd")+"&session="+sessionStorage.getItem("session")
         window.event.returnValue=false;
 }
+$(document).ready(function(){
+	$.post("/friends",{
+                username:sessionStorage.getItem("username"),
+                passwd:sessionStorage.getItem("passwd"),
+                session:sessionStorage.getItem("session")
+        },function( d ){
+                d = $.parseJSON(d);
+		$("#username1").text(d.username1)
+		$("#username2").text(d.username2)
+		$("#username3").text(d.username3)
+		$("#username4").text(d.username4)
+		$("#username5").text(d.username5)
+		$("#username6").text(d.username6)
+		
+        })
+
+});
 
 </script>
 
