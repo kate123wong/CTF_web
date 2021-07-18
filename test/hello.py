@@ -27,7 +27,6 @@ def hello():
 def getFriends():
     #cur = conn.cursor()
     sql="select username from Users"
-    print(sql)
     data=tuple()
     #conn.ping(reconnect=True)
     cur = conn.cursor()
@@ -118,20 +117,22 @@ def register():
     passwd = request.form.get('passwd')
     
     #在数据库中查询该用户名是否已经被注册
-    cur = conn.cursor()
     sql="select * from Users where username = %s"
     #sql="select * from Users where username = '" + username + "';"
     params = (username)
     #print(sql)
     data = tuple()
+    lock.acquire()
     try:
+        conn.ping(reconnect=True)
+        cur = conn.cursor()
         cur.execute(sql,params) # 执行查询的sql语句
-        #cur.execute(sql) # 执行查询的sql语句
         data = cur.fetchall()
         conn.commit() # 提交到数据库执行
         cur.close()
     except:
         conn.rollback()# 如果发生错误则回滚
+    lock.release()
     #the username haven't been registered
     print(data)
     if len(data) == 0:
@@ -139,6 +140,8 @@ def register():
         print(regist)
         params_regist = (username,passwd)
         try:
+
+            cur=conn.cursor()
             cur.execute(regist,params_regist)
             conn.commit()
             status = 202 #注册成功
@@ -236,7 +239,6 @@ def getkey():
         return json.dumps({"status" : status})
     sql = "select * from Users where 3passwd2 = '%s' and session = '%s' and username = '%s' "%(passwd,session,username)
     conn.ping(reconnect=True)
-    print(sql)
     cur = conn.cursor()
     try:
         lock.acquire()
