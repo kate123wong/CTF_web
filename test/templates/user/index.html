@@ -138,10 +138,28 @@ $(document).ready(function(){
 		$("#username5").text(d.username5)
 		$("#username6").text(d.username6)
 		
-        })
+        	
+		getMyself();
+	});
 
 });
-
+function getMyself(){
+	$.post("/myself",{
+                username:sessionStorage.getItem("username"),
+                passwd:sessionStorage.getItem("passwd"),
+                session:sessionStorage.getItem("session")
+        },function( d ){
+		console.log(d)
+                d = $.parseJSON(d);
+		if
+		(d && d.status == 208 && d.data){
+			console.log(d.data)
+			console.log(d.data[0])
+		}
+		
+	})
+	
+}
 </script>
 
 </body>
