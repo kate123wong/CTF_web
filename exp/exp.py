@@ -116,3 +116,4 @@ wget.download(resurl[0],"pic/secret.jpg")
 #cmd='steghide extract -sf pic/secret.jpg -p %s'%(key)
 #ans=os.system(cmd)
 #print(ans)
+##print
