@@ -7,7 +7,7 @@ from lxml import html
 from lxml import etree
 import os
 import re
-host = config.host;
+host = config.host
 url_register = "http://" + host + ":5000/register"
 url_login = "http://" + host + ":5000/login"
 url_index = "http://" + host + ":5000/index"
