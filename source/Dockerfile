@@ -3,7 +3,7 @@ RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -q python3 python3-pip 
 #RUN python -m pip3 install --upgrade pip
 RUN pip3 install --upgrade setuptools
-ADD ./fakebook/requirements.txt /tmp/requirements.txt
+ADD requirements.txt /tmp/requirements.txt
 RUN pip3 install -qr /tmp/requirements.txt
 ADD ./fakebook /opt/fakebook/
 WORKDIR /opt/fakebook
