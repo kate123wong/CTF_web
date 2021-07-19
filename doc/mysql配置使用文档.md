@@ -35,16 +35,17 @@ sudo docker run hello-world
 
 ```bash
 docker run -itd --name ctf-web-mysql -p 33069:3306 -e MYSQL_ROOT_PASSWORD=6iuVhYwmxC -e MYSQL_DATABASE=socialcontact -e MYSQL_USER=socialcontact -e MYSQL_PASSWORD=socialcontact123 mysql:5.7
-# docker内部的3306端口(对应mysql)映射到主机的33069端口。
+# docker内部的3306端口(对应mysql)映射到主机的33069端口。(从mysql:5.7镜像创建容器，命名为ctf-web-mysql)
 ```
 
 + [参考代码](https://github.com/alexferl/flask-mysqldb)
 
 ### 命令行进入mysql操作
 
-```
-docker exec  -it 容器id /bin/bash
-mysql -h localhost -u root -p6iuVhYwmxC
+```mysql
+docker start 容器id #如果容器停止运行，则使用该命令使其启动
+docker exec  -it 容器id /bin/bash #进入容器
+mysql -h localhost -u root -p6iuVhYwmxC #进入数据库
 ```
 
 ### mysql语法

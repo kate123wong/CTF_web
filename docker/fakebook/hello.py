@@ -2,17 +2,17 @@ from flask import Flask,render_template, request
 from hashlib import md5
 import requests
 import pymysql,threading
-import config
 import base64
 import json
 import time
 import random
+import os
 
 lock=threading.Lock()
-conn=pymysql.connect(host = config.host # 连接名称，默认127.0.0.1
+conn=pymysql.connect(host = "composemysql" # 连接名称，默认127.0.0.1
 ,user = 'root' # 用户名
 ,passwd='6iuVhYwmxC' # 密码
-,port= 33069 # 端口，默认为3306
+,port= 3306 # 端口，默认为3306
 ,db='socialcontact' # 数据库名称
 ,charset='utf8' # 字符编码
 )
@@ -250,4 +250,5 @@ def getkey():
 
 
 if __name__ == "__main__":
-   app.run()
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host="0.0.0.0",port=port)
