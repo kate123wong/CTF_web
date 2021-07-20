@@ -1,12 +1,18 @@
 version: '3'
 services:
-  mysql:
-    build: ./mysql
-    container_name: mysql
   fakebook:
-    build: .
+    build: web/.
     ports:
      - "5000:5000"
     depends_on:
-     - mysql
-    container_name: fakebook
+     - db
+    container_name: kate123wongfakebook
+    restart: always
+  db:
+    build: mysql/.
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      - MYSQL_ROOT_PASSWORD=6iuVhYwmxC
+    restart: always
+    container_name: kate123wongmysql
+  

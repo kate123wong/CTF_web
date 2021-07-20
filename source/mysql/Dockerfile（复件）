@@ -1,7 +1,0 @@
-FROM ubuntu:18.04
-RUN apt-get update && \
-apt-get install -y mysql-server
-COPY setup.sh /var/lib/mysql/setup.sh
-COPY data.sql /var/lib/mysql/data.sql
-COPY privileges.sql /var/lib/mysql/privileges.sql
-CMD ["sh", "/var/lib/mysql/setup.sh"]
