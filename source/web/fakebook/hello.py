@@ -8,15 +8,21 @@ import time
 import random
 import os
 
-
 lock=threading.Lock()
-conn=pymysql.connect(host = '192.168.0.158' # 连接名称，默认127.0.0.1
-,user = 'root' # 用户名
-,passwd='6iuVhYwmxC' # 密码
-,port= 33069 # 端口，默认为3306
-,db='socialcontact' # 数据库名称
-,charset='utf8' # 字符编码
-)
+
+while True:
+    try:
+        conn=pymysql.connect(host = "kate123wongmysql" # 连接名称，默认127.0.0.1
+           ,user = 'root' # 用户名
+           ,passwd='6iuVhYwmxC' # 密码
+           ,port= 3306 # 端口，默认为3306
+           ,db='socialcontact' # 数据库名称
+           ,charset='utf8') # 字符编码
+        break
+    except Exception as e:
+        print(e)
+        time.sleep(1)
+        continue
 
 app = Flask(__name__)
 @app.route('/')
