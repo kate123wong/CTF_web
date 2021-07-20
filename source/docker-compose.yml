@@ -6,7 +6,7 @@ services:
      - "5000:5000"
     depends_on:
      - db
-    container_name: kate123wongfakebook
+    container_name: fakebook
     restart: always
   db:
     build: mysql/.
@@ -14,5 +14,5 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=6iuVhYwmxC
     restart: always
-    container_name: kate123wongmysql
+    container_name: mysql
   
