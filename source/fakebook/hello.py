@@ -9,11 +9,11 @@ import random
 import os
 
 lock=threading.Lock()
-conn=pymysql.connect(host = "mysql" # 连接名称，默认127.0.0.1
+conn=pymysql.connect(host = "10.196.3.104" # 连接名称，默认127.0.0.1
 
 ,user = 'root' # 用户名
 ,passwd='6iuVhYwmxC' # 密码
-,port= 3306 # 端口，默认为3306
+,port= 33069 # 端口，默认为3306
 ,db='socialcontact' # 数据库名称
 ,charset='utf8' # 字符编码
 )
