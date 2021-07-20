@@ -9,7 +9,7 @@ import random
 import os
 
 lock=threading.Lock()
-conn=pymysql.connect(host = "mysql" # 连接名称，默认127.0.0.1
+conn=pymysql.connect(host = "ctf-web-mysql" # 连接名称，默认127.0.0.1
 
 ,user = 'root' # 用户名
 ,passwd='6iuVhYwmxC' # 密码
@@ -251,5 +251,5 @@ def getkey():
 
 
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 5000))
+    port = int(os.environ.get('PORT', 5001))
     app.run(host="0.0.0.0",port=port)
