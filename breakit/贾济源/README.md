@@ -45,3 +45,5 @@ The beginning is the end.
 The extracting password is in d:/password.txt in my computer, can you get it?
 ```
 
+![base64](README.assets/base64.png)
+
