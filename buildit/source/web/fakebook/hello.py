@@ -23,8 +23,6 @@ while True:
         print(e)
         time.sleep(1)
         continue
- 
-
 
 app = Flask(__name__)
 @app.route('/')
