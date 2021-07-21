@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <!-- Loding font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,700" rel="stylesheet">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" type="text/css" href="static/css/styles-login.css">
+    <script type=text/javascript src="{{
+  	url_for('static', filename='js/jquery-3.6.0.js') }}"></script>
+     <script type=text/javascript src="{{
+        url_for('static', filename='js/md5.min.js') }}"></script>
+    <title>Register</title>
+  </head>
+  <body>
+
+    <!-- Backgrounds -->
+
+    <div id="login-bg" class="container-fluid">
+
+      <div class="bg-img"></div>
+      <div class="bg-color"></div>
+      
+    </div>
+
+    <!-- End Backgrounds -->
+
+    <div class="container" id="login">
+        <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="login">
+
+            <h1>Register</h1>
+            
+            <!-- Loging form -->
+                    <div class="form-group">
+                      <input type="username" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Name" name="username">
+                      
+                    </div>
+                    <div class="form-group">
+                      <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="passwd">
+                    </div>
+
+                    <button type="submit" class="btn btn-lg btn-block btn-success" onclick="doPost('/register')">Sign up</button>
+		    
+		    <div id="status" style="margin-top:20px;color:#8B0000;font-size=35px;display:none;text-trandform:lowercase">请先登陆</div>
+		    <div style="margin-top:50px;"><a href="/login">Sigin in</a></div>
+             <!-- End Loging form -->
+          </div>
+        </div>
+        </div>
+    </div>
+
+  <style>
+.copyrights{text-indent:-9999px;height:0;line-height:0;font-size:0;overflow:hidden;}
+</style>
+<script>
+function doPost(url)
+{
+	var username=$('input[name="username"]').val();
+        var passwd=$('input[name="passwd"]').val();
+
+        if(username=="" || passwd==""){
+                $("#status").text("The password or username is null")
+                $("#status").show()
+                return false;
+        }
+
+	$.post(url, {
+		username: username,
+		passwd: md5(passwd)
+	}, function (d) {
+		d=$.parseJSON(d);
+		if(d.status && d.status == 202){
+			$("#status").text("registered,congraduation!")
+			$("#status").show()
+		}
+		if(d.status && d.status == 203){
+			$("#status").text("failed to register,please try it later.")
+                        $("#status").show()
+		}
+		if(d.status && d.status == 204){
+                        $("#status").text("the User name has been registered!")
+                        $("#status").show()
+                }
+		
+	});
+}
+</script>
+</body>
+</html>
