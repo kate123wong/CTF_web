@@ -1,5 +1,5 @@
-wget
+lxml==4.5.2
 requests
-lxml
-pyzbar
-pipfile
+wget==3.2
+pyzbar==0.1.8
+config
