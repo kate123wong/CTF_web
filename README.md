@@ -4,6 +4,18 @@
 
 王冬霞 张欣怡 马君瑞
 
+## Start
+
++ 从Dockerfile构建：
+
+  >进入source目录，运行`docker-compose up`,访问：`localhost:5000`
+
++ 直接从镜像启动服务（推荐：不依赖本除同级目录下的`docker-compose.yml`文件外的任何本仓库文件）：
+
+  >在本文件同级目录下，运行`docker-compose up`,访问：`localhost:5000`
+
+  **注意：如果本地5000端口被占用,可能导致服务启动失败**
+
 ### 说明
 + docker构建代码：source文件夹
 + 文档及说明：doc文件夹
