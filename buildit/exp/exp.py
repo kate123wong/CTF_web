@@ -1,16 +1,17 @@
-import sys
-import config
-import requests
-import hashlib,json
-from lxml import html
-from lxml import etree
+import base64
+import hashlib
+import json
 import os
 import re
-import base64
-from bs4 import BeautifulSoup
+import sys
+
+import requests
 import wget
-from pyzbar.pyzbar import decode
+from lxml import etree, html
 from PIL import Image
+from pyzbar import decode
+
+import config
 
 sys.path.append("..")
 
