@@ -1,0 +1,5 @@
+lxml==4.5.2
+requests
+wget==3.2
+pyzbar==0.1.8
+config

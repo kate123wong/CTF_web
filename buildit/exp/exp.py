@@ -1,6 +1,14 @@
+<<<<<<< HEAD
 import base64
 import hashlib
 import json
+=======
+import sys
+import requests
+import hashlib,json
+from lxml import html
+from lxml import etree
+>>>>>>> 675557f96ae9068bbe3fe6b82daf0d9ff00333c9
 import os
 import re
 import sys
@@ -13,13 +21,9 @@ from pyzbar import decode
 
 import config
 
-sys.path.append("..")
-
 host = sys.argv[1]
 port=sys.argv[2]
-#port = int(sys.argv[2])
 
-# host = config.host;
 #目前在本地环境测试exp
 url_register = "http://" + host + ":" + port + "/register"
 url_login = "http://" + host + ":" + port + "/login"
@@ -107,12 +111,12 @@ def getshell():
     #print(resurl[0])
     wget.download(resurl[0],"pic/secret.jpg")
 
-#Linux环境下取消以下注释实现解密
-    #cmd='steghide extract -sf pic/secret.jpg -p %s'%(key)
-    #os.system(cmd)
-    #cmd='cat pic/sc.txt'
-    #print("flag：")
-    #os.system(cmd)
+#Linux环境下实现解密
+    cmd='steghide extract -sf pic/secret.jpg -p %s'%(key)
+    os.system(cmd)
+    cmd='cat pic/sc.txt'
+    print("flag：")
+    os.system(cmd)
 
 
 if __name__ == '__main__':

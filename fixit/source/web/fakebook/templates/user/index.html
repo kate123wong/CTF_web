@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>fakebook</title>
+	<meta name="keywords" content="fakebook">
+	<meta name="description" content="fakebook">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	
+	<!-- include main css -->
+	<link rel="stylesheet" type="text/css" href="static/css/slick.css"/>	
+	<link rel="stylesheet" type="text/css" href="static/css/bootstrap.css"/>
+	<link rel="stylesheet" type="text/css" href="static/css/jquery.mmenu.all.css"/>
+	<link rel="stylesheet" type="text/css" href="static/css/style.css"/>
+	<link href="static/font-awesome-4.5.0/css/font-awesome.min.css" rel='stylesheet' type='text/css' media="all" />
+	<link rel="stylesheet" type="text/css" href="static/css/animate.css"/>
+	<script type=text/javascript src="{{
+        url_for('static', filename='js/jquery-3.6.0.js') }}"></script>
+	
+	<!--[if lt IE 9]>
+    <script src="http://apps.bdimg.com/libs/html5shiv/r29/html5.min.js"></script>
+    <script src="http://apps.bdimg.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!--blog-->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="keywords" content="test" />
+    <meta name="description" content="" />
+    <meta name="generator" content="emlog" />
+    <link href="http://www.cyxitong.com/content/templates/default/main.css" rel="stylesheet" type="text/css" />
+
+
+    <style>
+	.res-ele {
+		display: block;
+		margin-top: 20px;
+	}
+    </style>
+
+</head>
+<body>
+<div>	
+	<!--banner  start-->
+	<section class="banner_zi">
+	    <div><img src="static/img/user/bg.jpg" alt=""></div>	   
+	</section>
+	<div class="news_zi">
+		<div class="top_qie">
+			<a href="#" onclick="doGet()">首页</a>
+			<a href="#" class="active">个人中心</a>
+		</div>
+        <ul class="news_zi_ul">
+			<li class="clearfix">
+				<div class="news_left clearfix">
+					<div class="pic">
+						<a ><img src="static/img/user/logo.png" alt="" /></a>
+						<i></i>
+					</div>
+					<div class="txt">
+						<a>Profile</a>
+						<p>
+							培根在不经意间这样说过，深窥自己的心，而后发觉一切的奇迹在你自己。这不禁令我深思。对我个人而言，熊猫不仅仅是一个重大的事件，还可能会改变我的人生。我们都知道，只要有意义，那么就必须慎重考虑。
+						</p>
+					</div>
+				</div>
+				<div class="news_right clearfixt">
+					<div class="pic">
+						<a ><img src="static/img/user/QR.png" alt="" /></a>
+						<i></i>
+					</div>
+                    <span>向我付款<span>
+				</div>
+			</li>
+        </ul>
+	</div>
+</div>
+<div class="syzz">
+    <div class="syzz_con">
+        <div class="left">
+            <h2>试试搜搜自己吧</h2>
+            <div class="search">
+                <span class="sea_x">
+                <input type="username"  id="" placeholder="请输入username" name="username">
+                <div class="btn">
+                    <button type="submit" onclick="getMyself()">搜索🔍</button>
+                </div>
+                </span>
+            <h3 id="intro"></h3>
+            <a id="yourself"></a>
+            </div>
+        </div>
+    <div class="right">
+        <div class="fang_t">
+            <span>可能认识的人</span>
+        </div>
+        <div class="fang_c">
+            <a>
+                <span id = username1>username1</span>
+            </a>
+        </div>
+        <div class="fang_c">
+            <a>
+                <span id = username2>username2</span>
+            </a>
+        </div>
+        <div class="fang_c">
+            <a>
+                <span id = username3>username3</span>
+            </a>
+        </div>
+        <div class="fang_c">
+            <a>
+                <span id = username4>username4</span>
+            </a>
+        </div>
+        <div class="fang_c">
+            <a>
+                <span id = username5>username5</span>
+            </a>
+        </div>
+        <div class="fang_c">
+            <a>
+                <span id = username6>username6</span>
+            </a>
+        </div>
+    </div>
+    </div>
+</div>
+<script>
+function doGet(){
+        username=sessionStorage.getItem("username");
+        window.location.href='/index'+"?username="+username+"&passwd="+sessionStorage.getItem("passwd")+"&session="+sessionStorage.getItem("session")
+        window.event.returnValue=false;
+}
+$(document).ready(function(){
+	$.post("/friends",{
+                username:sessionStorage.getItem("username"),
+                passwd:sessionStorage.getItem("passwd"),
+                session:sessionStorage.getItem("session")
+        },function( d ){
+                d = $.parseJSON(d);
+		if(d && d.status && d.status == 208 && d.friends){
+			$("#username1").text(d.friends.username1)
+			$("#username2").text(d.friends.username2)
+			$("#username3").text(d.friends.username3)
+			$("#username4").text(d.friends.username4)
+			$("#username5").text(d.friends.username5)
+			$("#username6").text(d.friends.username6)
+		}
+	});
+
+});
+function getMyself(){
+	var input_username = $('input[name="username"]').val();
+	$.post("/myself",{
+		username:input_username, //实际上向后端传的是输入框输入的内容,注意:input 的name属性应该为username,此处才能取道用户传入的值
+                passwd:sessionStorage.getItem("passwd"),
+                session:sessionStorage.getItem("session")
+        },function( d ){
+                d = $.parseJSON(d);
+		if(d && d.status == 208 && d.data){
+			console.log(d.data)
+            if (!d.data[1]&&d.data[0]){
+                $("#intro").text("ID|NAME|PASSWORD|SESSION")
+            }
+            if(d.data[1]){
+                $("#intro").text("One step closer to victory👏")
+            }
+            if(!d.data[0]){
+                $("#intro").text("Nobody else🤷‍♂️")
+            }
+			$("#yourself").html("<ul id='result'></ul>");
+			for (let i of d.data) {
+				const tmpData = document.createElement("ui");
+				tmpData.setAttribute("class", "res-ele");
+				tmpData.innerHTML = i;
+				document.getElementById("result").appendChild(tmpData);
+			}
+		}
+		if(d && d.status == 210){
+                      console.log("some error.")
+                }
+	})
+}
+</script>
+
+</body>
+</html>
