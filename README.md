@@ -39,7 +39,7 @@
 | -------------------- | -------------- | ------------------------------------------------------------ |
 | 前端页面代码编写     | 马君瑞         | 马君瑞(登陆、注册、首页、个人主页的编写)、王冬霞(各页面跳转逻辑的编写、前端连接数据的编写) |
 | 后端页面代码编写     | 王冬霞         | 王冬霞(`flask`编写后端逻辑、`docker`部署`mysql`)、张欣怡 (数据库表的创建、原始数据的插入) |
-| 二维码相关的flag隐藏 | 张欣怡         | 张欣怡(调查相关的图像隐藏工具，进入flag嵌入、二维码生成的相关工作) |
+| 二维码相关的flag隐藏 | 张欣怡         | 张欣怡(调查相关的图像隐藏工具，进行图片隐写、flag嵌入、二维码生成的相关工作) |
 | 运维交付             | 王冬霞         | 王冬霞(创建`web`端和`mysql`端镜像的`Dockerfile`的编写，启动服务的`docker-compose`的编写、镜像打包上传)、马君瑞(构建`web`和`mysql`端的`Dockerfile`的编写) |
 | exp与check编写       | 王冬霞、张欣怡 | 王冬霞(`check`的编写、`exp`中：登陆、获取`session`、`sql`注入、得到`admin`密码、获取`admin`用户个人主页的二维码)、张欣怡(`exp`中：处理获取到的二维码，提取隐藏图片，从图片中提取`flag`) |
 | 文档                 | 无             | 张欣怡、马君瑞、王冬霞（各自负责的部分）                     |
@@ -195,21 +195,21 @@
 
 + `Dockerfile`构建`web`：
 
-	```dockerfile
-FROM ubuntu:18.04
-RUN apt-get update
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -q python3 python3-pip 
-#RUN python -m pip3 install --upgrade pip
-RUN pip3 install --upgrade setuptools
-ADD ./webapp/requirements.txt /tmp/requirements.txt
-RUN pip3 install -qr /tmp/requirements.txt
-ADD ./webapp /opt/webapp/
-WORKDIR /opt/webapp
-EXPOSE 5000
-ENV LC_ALL=C.UTF-8
-ENV LANG=C.UTF-8
-CMD ["python3", "hello.py"]
-	```
+  ```dockerfile
+  FROM ubuntu:18.04
+  RUN apt-get update
+  RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -q python3 python3-pip 
+  #RUN python -m pip3 install --upgrade pip
+  RUN pip3 install --upgrade setuptools
+  ADD ./webapp/requirements.txt /tmp/requirements.txt
+  RUN pip3 install -qr /tmp/requirements.txt
+  ADD ./webapp /opt/webapp/
+  WORKDIR /opt/webapp
+  EXPOSE 5000
+  ENV LC_ALL=C.UTF-8
+  ENV LANG=C.UTF-8
+  CMD ["python3", "hello.py"]
+  ```
 
 + 从`Dockerfile`构建`mysql`：
 
@@ -222,30 +222,29 @@ CMD ["python3", "hello.py"]
 
 + `docker-compose`启动`web`服务和`mysql`服务：
 
-	```yml
-version: '3'
-services:
-  fakebook:
-    build: web/.
-    ports:
-     - "5000:5000"
-    depends_on:
-     - db
-    container_name: fakebook
-    restart: always
-  db:
-    build: mysql/.
-    command: --default-authentication-plugin=mysql_native_password
-    environment:
-      - MYSQL_ROOT_PASSWORD=6iuVhYwmxC
-    restart: always
-    container_name: kate123wongmysql
-  
-	```
+  ```yml
+  version: '3'
+  services:
+    fakebook:
+      build: web/.
+      ports:
+      - "5000:5000"
+      depends_on:
+       - db
+      container_name: fakebook
+      restart: always
+    db:
+      build: mysql/.
+      command: --default-authentication-plugin=mysql_native_password
+      environment:
+        - MYSQL_ROOT_PASSWORD=6iuVhYwmxC
+      restart: always
+      container_name: kate123wongmysql
+  ```
 
 + 注：`dtata.sql`文件内容如下：
 
-	```mysql
+	```sql
 	use socialcontact;
 	DROP TABLE IF EXISTS `Users`;
 	/*!40101 SET @saved_cs_client     = @@character_set_client */;
