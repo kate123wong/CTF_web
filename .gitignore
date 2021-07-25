@@ -1,8 +1,6 @@
-<<<<<<< HEAD
-.DS_Store
 
-=======
->>>>>>> f2783e82bb5579e5c5c590c981321bbb5644dfaa
+.vscode/
+.DS_Store
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
