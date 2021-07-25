@@ -12,10 +12,10 @@ lock=threading.Lock()
 
 while True:
     try:
-        conn=pymysql.connect(host = "mysql" # 连接名称，默认127.0.0.1
+        conn=pymysql.connect(host = "127.0.0.1" # 连接名称，默认127.0.0.1
           ,user = 'root' # 用户名
           ,passwd='6iuVhYwmxC' # 密码
-          ,port= 3306 # 端口，默认为3306
+          ,port= 33069 # 端口，默认为3306
           ,db='socialcontact' # 数据库名称
           ,charset='utf8') # 字符编码
         break
@@ -23,7 +23,6 @@ while True:
         print(e)
         time.sleep(1)
         continue
-
 
 app = Flask(__name__)
 @app.route('/')
@@ -199,6 +198,7 @@ def toUserIndex():
      # user hasn't been registered, or passwd is wrong or he doesn't login in.
     return "You have not login in."
 
+
 @app.route('/myself',methods=['POST'])
 def getkey():
     session = request.form.get("session")
@@ -207,12 +207,13 @@ def getkey():
     if(username is None  or passwd is None or session is None):
         status = 209
         return json.dumps({"status" : status})
-    sql = "select * from Users where 3passwd2 = '%s' and session = '%s' and username = '%s' "%(passwd,session,username)
+    sql = "select * from Users where 3passwd2 = %s and session = %s and username = %s "
+    params=(passwd,session,username)
     conn.ping(reconnect=True)
     cur = conn.cursor()
     try:
         lock.acquire()
-        cur.execute(sql)
+        cur.execute(sql,params)
         lock.release()
         data = cur.fetchall()
         conn.commit()
@@ -225,5 +226,5 @@ def getkey():
     return json.dumps({"status":210})
 
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 5000))
+    port = int(os.environ.get('PORT', 5001))
     app.run(host="0.0.0.0",port=port)

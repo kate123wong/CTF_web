@@ -65,20 +65,6 @@
 .copyrights{text-indent:-9999px;height:0;line-height:0;font-size:0;overflow:hidden;}
 </style>
 <script>
-
-//function doPost() 
-//  {  
-//    var url = "http://localhost:5000/login";
-//    $.post("/login", {
-//      username: $('input[name="username"]').val(),
-//      passwd: $('input[name="password"]').val()
-//    }, function (d) {
-//      // console.log(d);
-//      console.log($('html'));
-//      $('html').html( d );
-//    });
-//  }
-
 function doPost(url) 
 {
 	var username=$('input[name="username"]').val();
@@ -94,13 +80,10 @@ function doPost(url)
 		passwd:passwd
 	}, function (d) {
 		d=$.parseJSON(d);
-		// console.log(d);
-		// console.log($('html'));
 		if (d.status && d.status == 201){
 			$("#status").text("the user hasn't been registered")
 			$("#status").show()
 		}
-			//$('html').html( d.html );
 		if (d.status && d.status == 205){
                         $("#status").text("password is error")
                         $("#status").show()
@@ -112,46 +95,17 @@ function doPost(url)
 			setStorage("username", username)
 			setStorage("passwd", passwd)
 			window.location.href="/index?username="+username+"&passwd="+passwd+"&session="+d.session
-			//console.log(windows.location.href)
 			window.event.returnValue=false;
-			 // doPost_index()
 		}
 		if(d.status && d.status ==207){
 			$("#status").text("failed to login in,please try it again later")
                         $("#status").show()
 		}
-
 	});
 	return true;
 }
 function setStorage(cname,cvalue){
 	sessionStorage.setItem(cname,cvalue)
-}
-function doPost_index(){
-	$.post("/index",{
-		username:sessionStorage.getItem("username"),
-		passwd:sessionStorage.getItem("passwd"),
-		session:sessionStorage.getItem("session")
-	},function( d ){
-		if(typeof d == 'undefined'){
-			$("#status").text("there are some error")
-                        $("#status").show()
-			return false;
-		}
-		d = $.parseJSON(d);
-		if(d && d.status &&d.status==208 && d.html){
-			console.log("d.html is:-----------",d.html)
-			// $("html").html(d.html)
-			// consloe.log(doc.head)
-			$('html').html( d.html );
-			console.log("after")
-		}
-		if(d && d.status == 207){
-			$("#status").text("failed to login in, check your password or username")
-			$("#status").show()
-		}
-
-	})
 }
 </script>
 </body>

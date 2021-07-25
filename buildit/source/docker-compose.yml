@@ -15,4 +15,3 @@ services:
       - MYSQL_ROOT_PASSWORD=6iuVhYwmxC
     restart: always
     container_name: mysql
-  
