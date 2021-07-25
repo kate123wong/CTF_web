@@ -181,7 +181,7 @@
 
 **注意：如果本地5000端口被占用,可能导致服务启动失败**
 
-+ [从`Dockerfile`构建](./documentation/Dockercompose构建说明文档)：
++ [从`Dockerfile`构建](./documentation/Dockercompose构建说明文档.md)：
 
   >进入source目录，运行`docker-compose up`,访问：`localhost:5000`
 
