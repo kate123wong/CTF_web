@@ -1,19 +1,11 @@
-<<<<<<< HEAD
-import base64
-import hashlib
-import json
-=======
-import sys
-import requests
 import hashlib,json
 from lxml import html
 from lxml import etree
->>>>>>> 675557f96ae9068bbe3fe6b82daf0d9ff00333c9
+import base64
+import requests
 import os
 import re
 import sys
-
-import requests
 import wget
 from lxml import etree, html
 from PIL import Image
