@@ -1,7 +1,3 @@
-# 小组成员
-
-王冬霞 张欣怡 马君瑞
-
 # 需求分析
 
 设计一个类似社交网站。包含注册界面、登录界面、主界面、个人详情界面；可以在个人主页侧边栏查看可能认识的人；可以通过搜索得到自己的用户名得到自己的相关信息。
@@ -54,9 +50,9 @@
 | 2021.7.20                  | 完成mysql docker的构建，实现用dockercompose自动化部署环境。  | 是           |
 | 2021.7.21~2021.7.25        | 完善文档、最后的报告填写                                     | 是           |
 
-## API接口说明
+# API接口说明
 
-状态码说明：
+## 状态码说明
 
 + 200：成功注册
 + 201：用户未注册
@@ -69,6 +65,8 @@
 + 208：成功返回
 + 209：未登录
 + 210：其他
+
+## API接口
 
 | 请求路径  | 请求类型 | 参数                    | 返回值（字符串）                                             | 备注                                                         |
 | --------- | -------- | ----------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
@@ -104,11 +102,11 @@
 
   ![image-20210721193216503](README.assets/image-20210721193216503.png)
 
-  + 编写`SQL`注入代码，得到`admin`的密码(`md5`加密后的)和key字段；进行登陆；扫描二维码并得到图片；使用`steghide`提取`flag`(会用到数据库表中的key):
++ 编写`SQL`注入代码，得到`admin`的密码(`md5`加密后的)和key字段；进行登陆；扫描二维码并得到图片；使用`steghide`提取`flag`(会用到数据库表中的key):
 
-    ```bash
-    steghide extract -sf 70acc53a08b04f2385ae27d382d62618.jpg
-    ```
+  ```bash
+  steghide extract -sf 70acc53a08b04f2385ae27d382d62618.jpg
+  ```
 
 # 关键技术
 
@@ -293,3 +291,14 @@
 	/*!40000 ALTER TABLE `Users` ENABLE KEYS */;
 	UNLOCK TABLES;
 	```
+
+# 参考文献
+
++ [课程网站](https://c4pr1c3.gitee.io/cuc-wiki/cp/2021/index.html)
++ [评分标准](https://c4pr1c3.gitee.io/cuc-wiki/cp/assessment.html)
++ [jquery](https://api.jquery.com/)
++ [flask](https://flask.palletsprojects.com/en/2.0.x/installation/)
++ [mysql-docker-entrypoint.sh](https://github.com/docker-library/mysql/blob/9e91c13e4147ab680e620d06fb16b505d6ea6bd1/5.7/docker-entrypoint.sh)
++ [mysql-docker](https://hub.docker.com/_/mysql)
++ [mysql-dockerfile](https://github.com/docker-library/mysql/blob/9e91c13e4147ab680e620d06fb16b505d6ea6bd1/5.7/Dockerfile.debian)
+
